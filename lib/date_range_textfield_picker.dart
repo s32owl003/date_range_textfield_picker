@@ -9,6 +9,7 @@ Widget datePicker(BuildContext context,{required TextEditingController controlle
   Locale? locale,
   DateTime? firstDate,
   DateTime? lastDate,
+  String? invalidText,
   void Function(String)? onChanged,
   bool Function(DateTime)? selectableDayPredicate,
 }) {
@@ -24,7 +25,7 @@ Widget datePicker(BuildContext context,{required TextEditingController controlle
     selectableDayPredicate: selectableDayPredicate,
     onChanged: onChanged,
     validator: (str){
-      return (str!=""&&str!=null)?null:"wrong";
+      return (str!=""&&str!=null)?null:(invalidText??"Please choose a date");
     },
   );
 }
@@ -37,6 +38,7 @@ class DateRangeTextFieldPickerForm extends StatefulWidget{
     this.startLabelText,
     this.endLabelText,
     this.locale,
+    this.invalidText,
     required this.startDateController,
     required this.endDateController,
     required this.formKey,
@@ -52,6 +54,7 @@ class DateRangeTextFieldPickerForm extends StatefulWidget{
   final TextEditingController startDateController;
   final TextEditingController endDateController;
   final GlobalKey<FormState> formKey;
+  final String? invalidText;
   @override
   _DateRangeTextFieldPickerFormState createState() => _DateRangeTextFieldPickerFormState();
 
@@ -117,6 +120,7 @@ Future<DateTimeRange?> showDateRangeTextFieldPicker({required BuildContext conte
   String? confirmLabelText,
   Locale? locale,
   String? cancelLabelText,
+  String? invalidText,
 })async{
   var startDateController=TextEditingController();
   var endDateController=TextEditingController();
@@ -145,6 +149,7 @@ Future<DateTimeRange?> showDateRangeTextFieldPicker({required BuildContext conte
               startLabelText:startLabelText,
               endLabelText:endLabelText,
               locale:locale,
+              invalidText: invalidText,
             )
         ),
         actions: [
@@ -163,8 +168,8 @@ Future<DateTimeRange?> showDateRangeTextFieldPicker({required BuildContext conte
               if (loForm?.validate() == true) {
                 dR=DateTimeRange(start: DateTime.parse(startDateController.text),
                     end: DateTime.parse(endDateController.text));
+                Navigator.pop(context,dR);
               }
-              Navigator.pop(context,dR);
             },
             child: Text(confirmLabelText??'Save'),
           ),
