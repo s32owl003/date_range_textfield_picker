@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 Widget datePicker(BuildContext context,{required TextEditingController controller,
   String? dateLabelText,
   Locale? locale,
+  Locale? dialogLocale,
   DateTime? firstDate,
   DateTime? lastDate,
   String? invalidText,
@@ -22,6 +23,7 @@ Widget datePicker(BuildContext context,{required TextEditingController controlle
     icon: Icon(Icons.event),
     dateLabelText: dateLabelText??'Date',
     locale: locale,
+    dialogLocale: dialogLocale,
     selectableDayPredicate: selectableDayPredicate,
     onChanged: onChanged,
     validator: (str){
@@ -38,6 +40,7 @@ class DateRangeTextFieldPickerForm extends StatefulWidget{
     this.startLabelText,
     this.endLabelText,
     this.locale,
+    this.dialogLocale,
     this.invalidText,
     required this.startDateController,
     required this.endDateController,
@@ -51,6 +54,7 @@ class DateRangeTextFieldPickerForm extends StatefulWidget{
   final String? startLabelText;
   final String? endLabelText;
   final Locale? locale;
+  final Locale? dialogLocale;
   final TextEditingController startDateController;
   final TextEditingController endDateController;
   final GlobalKey<FormState> formKey;
@@ -70,6 +74,7 @@ class _DateRangeTextFieldPickerFormState extends State<DateRangeTextFieldPickerF
               firstDate: widget.firstDate,
               lastDate:widget.lastDate,
               locale:widget.locale,
+              dialogLocale: widget.dialogLocale,
               selectableDayPredicate: widget.selectableDayPredicate,
               controller: widget.startDateController,
               dateLabelText: widget.startLabelText,
@@ -83,12 +88,14 @@ class _DateRangeTextFieldPickerFormState extends State<DateRangeTextFieldPickerF
                     });
                   }
                 }
-              }
+              },
+              invalidText: widget.invalidText,
           ),
           datePicker(context,
               firstDate: widget.firstDate,
               lastDate:widget.lastDate,
               locale:widget.locale,
+              dialogLocale: widget.dialogLocale,
               selectableDayPredicate: widget.selectableDayPredicate,
               controller: widget.endDateController,
               dateLabelText: widget.endLabelText,
@@ -102,7 +109,8 @@ class _DateRangeTextFieldPickerFormState extends State<DateRangeTextFieldPickerF
                     });
                   }
                 }
-              }
+              },
+              invalidText: widget.invalidText,
           ),
         ]
     ),
@@ -119,6 +127,7 @@ Future<DateTimeRange?> showDateRangeTextFieldPicker({required BuildContext conte
   String? endLabelText,
   String? confirmLabelText,
   Locale? locale,
+  Locale? dialogLocale,
   String? cancelLabelText,
   String? invalidText,
 })async{
@@ -149,6 +158,7 @@ Future<DateTimeRange?> showDateRangeTextFieldPicker({required BuildContext conte
               startLabelText:startLabelText,
               endLabelText:endLabelText,
               locale:locale,
+              dialogLocale: dialogLocale,
               invalidText: invalidText,
             )
         ),
