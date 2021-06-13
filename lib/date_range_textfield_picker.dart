@@ -123,6 +123,8 @@ class _DateRangeTextFieldPickerFormState extends State<DateRangeTextFieldPickerF
 
 Future<DateTimeRange?> showDateRangeTextFieldPicker({required BuildContext context,String? title,DateTime? firstDate,
   DateTime? lastDate,bool Function(DateTime)? selectableDayPredicate,
+  DateTime? initialStartDate,
+  DateTime? initialEndDate,
   String? startLabelText,
   String? endLabelText,
   String? confirmLabelText,
@@ -131,8 +133,8 @@ Future<DateTimeRange?> showDateRangeTextFieldPicker({required BuildContext conte
   String? cancelLabelText,
   String? invalidText,
 })async{
-  var startDateController=TextEditingController();
-  var endDateController=TextEditingController();
+  var startDateController=TextEditingController()..text=initialStartDate?.toString()??"";
+  var endDateController=TextEditingController()..text=initialEndDate?.toString()??"";
   var screenWidth=MediaQuery.of(context).size.width;
   //var screenHeight=MediaQuery.of(context).size.height;
   GlobalKey<FormState> _oFormKey = GlobalKey<FormState>();

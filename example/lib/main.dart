@@ -57,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       lastDate: DateTime.parse("2050-01-01"),
                       startLabelText: "開始日期", endLabelText: "結束日期",confirmLabelText: "確定",
                       cancelLabelText: "取消",locale:Locale("zh","TW"),
+                      initialEndDate: DateTime.now(),
                   );
                   print(dR);
                 },
